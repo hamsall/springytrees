@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import { useSpring, animated } from '@react-spring/web'
+import styles from './styles.module.css'
+import Tree from './Tree'
 
-function App() {
+/*
+0 % { transform: scale(1); }
+50 % { transform: scale(1.4); }
+100 % { transform: scale(1); }
+`*/
+
+export default function App() {
+  const [state, toggle] = useState(true)
+  const { x } = useSpring({
+    from: { x: 0 },
+    x: state ? 1 : 0,
+    config: { duration: 250 },
+  })
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={styles.container} onClick={() => toggle(!state)}>
+      <animated.div
+        className={styles.text}
+        style={{
+          opacity: x.to({ range: [0, 1], output: [0.3, 1] }),
+          scale: x.to({
+            range: [0, 0.5, 1],
+            output: [0, 1.4, 1],
+          }),
+        }}>
+        <Tree/>
+      </animated.div>
     </div>
-  );
+  )
 }
-
-export default App;

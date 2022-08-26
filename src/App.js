@@ -24,8 +24,9 @@ export default function App() {
           opacity: x.to({ range: [0, 1], output: [0.3, 1] }),
           scale: x.to({
             range: [0, 0.5, 1],
-            output: [0, 1.4, 1],
+            output: [0, 1.1, 1],
           }),
+          translateY: x.to({ range: [0, 1], output: [-500, 0]})
         }}>
         <Tree/>
       </animated.div>
